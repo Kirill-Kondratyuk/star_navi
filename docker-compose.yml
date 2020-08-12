@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data_local:/var/lib/postgresql/data
+      - postgres_backup_local:/backups
+    env_file:
+      - ./postgres/.env
+    restart: on-failure
+
+  api:
+    build: ./api
+    volumes:
+    - ./api:/api
+    ports:
+    - "8000:8000"
+    depends_on:
+      - postgres
+    restart: on-failure
+
+volumes:
+  postgres_data_local:
+  postgres_backup_local:
