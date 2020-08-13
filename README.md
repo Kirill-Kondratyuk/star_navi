@@ -15,11 +15,13 @@ You need docker and docker-compose to be installed on your machine
   python manage.py makemigrations
   python manage.py migrate
 ```
-### Create user which has access to analytics and activity endpoints
+### Create user which has access to analytics and activity endpoints (Via sighnup endpoint)
 ```
+    # increase user privileges
     python manage.py shell
     from account.models import UserModel
-    user = UserModel(username='username', password='password', is_staff=True)
+    user = UserModel.objects.get(username='username', password='password')
+    user.is_staff = True
     user.save()
 ```
 
